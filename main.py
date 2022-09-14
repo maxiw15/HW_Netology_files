@@ -33,4 +33,26 @@ def get_shop_list_by_dishes(dishes, person_count):
         return shop_list
 
 
-print(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2))
+def sort_files(files_list):
+    temp_list = []
+    for files in files_list:
+        with open(files, encoding="utf8") as file:
+            text = file.readlines()
+            temp_list.append({"name": files, "len": len(text), "text": text})
+    answer = sorted(temp_list, key=lambda row: row["len"])
+    file = open("answer.txt", "w")
+    file.close()
+    with open("answer.txt", "a") as file:
+        for dicts in answer:
+            file.write(dicts["name"]+"\n")
+            file.write(str(dicts["len"])+"\n")
+            for string in dicts["text"]:
+                file.write(string)
+            file.write("\n")
+
+
+
+
+
+files_list = ["1.txt", "2.txt", "3.txt"]
+sort_files(files_list)
