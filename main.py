@@ -1,31 +1,19 @@
-def recipe_book(file_name, start_point=0):
-    dictionary = {}
-    with open(file_name, encoding="utf8") as file:
-        file.seek(start_point)
-        name = file.readline().replace("\n", "")
-        dictionary[name] = []
-        count = file.readline()
-        for i in range(int(count)):
-            ingredient_name, quantity, measure = file.readline().replace("\n", "").split(" | ")
-            dictionary[name].append({"ingredient_name": ingredient_name})
-            dictionary[name].append({"quantity": quantity})
-            dictionary[name].append({"measure": measure})
+cook_book = {}
+with open("recipes.txt", encoding="utf8") as file:
+    for line in file:
+        dish_name = line.strip()
+        cook_book[dish_name] = []
+        count = int(file.readline())
+        for ingredients in range(count):
+            ingredient_name, quantity, measure = file.readline().split(" | ")
+            dish_names = {'ingredient_name': ingredient_name, 'quantity': int(quantity), 'measure': measure.strip()}
+            cook_book[dish_name].append(dish_names)
         file.readline()
-        stop_point = file.tell()
-        if stop_point == file.seek(0, 2):
-            return dictionary, -1
-        else:
-            return dictionary, stop_point
+
+for i in cook_book.items():
+    print(i)
 
 
-def main():
-    answer = []
-    temp, point = recipe_book("recipes.txt")
-    answer.append(temp)
-    while point != -1:
-        temp, point = recipe_book("recipes.txt", point)
-        answer.append(temp)
-    return answer
 
 
-print(main())
+
